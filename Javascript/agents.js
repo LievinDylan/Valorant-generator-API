@@ -66,16 +66,17 @@ const agentManager = {
         const skillsElement = document.querySelector('#skills');
         skillsElement.textContent = "";
         agent.abilities.forEach(ability => {
+            // Retrait des skills passifs à l'affichage
             if (ability.slot !== "Passive") {
             const skillContainer = document.createElement('div');
             skillContainer.classList.add('skill_container')
-            const skillElement = document.createElement('p');
+            const skillTitle = document.createElement('p');
             const skillImg = document.createElement('img');
             skillImg.classList.add('skill_img')
             skillImg.setAttribute('src', `${ability.displayIcon}`)
-            skillElement.textContent = ability.displayName;
+            skillTitle.textContent = ability.displayName;
             skillContainer.appendChild(skillImg)
-            skillContainer.appendChild(skillElement)
+            skillContainer.appendChild(skillTitle)
             skillsElement.appendChild(skillContainer)
             }
         });
