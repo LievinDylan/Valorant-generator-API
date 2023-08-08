@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <title>Valogénérateur</title>
+</head>
+<header>
+    <h2>VALO'GENER'AGENT</h2>
+</header>
+
+<body>
+    <main>
+        <div id="btn_container">
+            <button id="agent_generator_btn">GO</button>
+        </div>
+        <div id="agent_container" class="hidden">
+            <div class="left_side">
+                <img id="agent_img">
+            </div>
+            <div class="right_side hidden">
+                <h2 id="agent_name"></h2>
+                <h3 id="agent_role"></h3>
+                <p id="agent_description"></p>
+                <h3>Compétences</h3>
+                <div id="skills">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/Javascript/agents.js"></script>
+    <script src="/Javascript/app.js"></script>
+    <script src="/Javascript/generator.js"></script>
+</body>
+<footer>
+    <p>Copyright : Riot Games</p>
+</footer>
+</html>
