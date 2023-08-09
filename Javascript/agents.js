@@ -50,7 +50,8 @@ const agentManager = {
     displayAgent: async function() {
 
         const agent = await this.fetchRandomAgent();
-
+        this.currentAgent = agent;
+        console.log(this.currentAgent);
         const agentInformationContainer = document.querySelector('.agent_information')
         agentInformationContainer.textContent = "";
 
@@ -69,7 +70,7 @@ const agentManager = {
         const imgElement = document.querySelector('#agent_img')
         imgElement.setAttribute('src', `${agent.fullPortrait}`);
         animationManager.animateText();
-        this.currentAgent = agent;
+        
         console.log(this.currentAgent)
     },
     // Méthode de traitement des compétences de l'agent
