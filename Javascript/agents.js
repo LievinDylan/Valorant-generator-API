@@ -10,7 +10,6 @@ const agentManager = {
         try {
             const agentsData = await response.json();
             const agents = agentsData.data;
-            this.agentsIdArray = [];
             agents.forEach(agent => {
                 const agentId = agent.uuid
                 this.agentsIdArray.push(agentId)
@@ -36,13 +35,13 @@ const agentManager = {
     fetchRandomAgent: async function() {
         const agents = await this.fetchAgents();
         // Nombre total des agents
-        const nbOfagents = agents.length;
+        const nbOfAgents = agents.length;
         // Génération du nombre aléatoire
-        const randomNumber = Math.floor(Math.random() * nbOfagents)
+        const randomNumber = Math.floor(Math.random() * nbOfAgents)
         // Selection aléatoire de l'uuid
-        const randomAgentNumber = this.agentsIdArray[randomNumber];
+        const randomAgentId = this.agentsIdArray[randomNumber];
         // Récupération de l'agent
-        const randomAgentData = await this.fetchOneAgent(randomAgentNumber);
+        const randomAgentData = await this.fetchOneAgent(randomAgentId);
         const agent = randomAgentData.data;
         return agent;
     },
@@ -53,33 +52,12 @@ const agentManager = {
         // Ajout du nom de l'agent
         const nameElement = document.querySelector('#agent_name');
         nameElement.textContent = agent.displayName;
-        // Ajout de la description de l'agent
-        const descriptionElement = document.querySelector('#agent_description');
-        descriptionElement.textContent = agent.description;
         // Ajout du rôle de l'agent
         const roleElement = document.querySelector('#agent_role');
         roleElement.textContent = agent.role.displayName;
         // Ajout de l'image de l'agent
         const imgElement = document.querySelector('#agent_img')
-        imgElement.setAttribute('src', `${agent.fullPortrait}`)
-        // Ajout des skills de l'agent
-        const skillsElement = document.querySelector('#skills');
-        skillsElement.textContent = "";
-        agent.abilities.forEach(ability => {
-            // Retrait des skills passifs à l'affichage
-            if (ability.slot !== "Passive") {
-            const skillContainer = document.createElement('div');
-            skillContainer.classList.add('skill_container')
-            const skillTitle = document.createElement('p');
-            const skillImg = document.createElement('img');
-            skillImg.classList.add('skill_img')
-            skillImg.setAttribute('src', `${ability.displayIcon}`)
-            skillTitle.textContent = ability.displayName;
-            skillContainer.appendChild(skillImg)
-            skillContainer.appendChild(skillTitle)
-            skillsElement.appendChild(skillContainer)
-            }
-        });
+        imgElement.setAttribute('src', `${agent.fullPortrait}`);
     }
 
 
