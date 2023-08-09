@@ -120,14 +120,11 @@ const agentManager = {
         }
 
         let newArraySkills = [];
-        console.log(randomNumberOne)
-        console.log(randomNumberTwo)
         const avaibleSkillOne = abilitiesArray[randomNumberOne];
         const avaibleSkillTwo = abilitiesArray[randomNumberTwo];
         newArraySkills.push(avaibleSkillOne);
         newArraySkills.push(avaibleSkillTwo);
-        console.log(newArraySkills)
-
+        
         newArraySkills.forEach(ability => {
         const skillContainer = document.createElement('div');
         skillContainer.classList.add("skill_row")
