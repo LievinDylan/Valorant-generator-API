@@ -44,13 +44,13 @@ const agentManager = {
         // Récupération de l'agent
         const randomAgentData = await this.fetchOneAgent(randomAgentId);
         const agent = randomAgentData.data;
+        this.currentAgent = agent;
         return agent;
     },
     // Méthode de traitement des données de l'agent
     displayAgent: async function() {
 
         const agent = await this.fetchRandomAgent();
-        this.currentAgent = agent;
         const agentInformationContainer = document.querySelector('.agent_information')
         agentInformationContainer.textContent = "";
 
@@ -73,6 +73,7 @@ const agentManager = {
     // Méthode de traitement des compétences de l'agent
     displaySkillsEasy: function() {
         const agent = this.currentAgent;
+        console.log(this.currentAgent)
         const skillEasyContainer = document.querySelector('#skills_container_easy');
         skillEasyContainer.textContent = "";
         const abilitiesArray = [];
@@ -124,7 +125,7 @@ const agentManager = {
         const avaibleSkillTwo = abilitiesArray[randomNumberTwo];
         newArraySkills.push(avaibleSkillOne);
         newArraySkills.push(avaibleSkillTwo);
-        
+
         newArraySkills.forEach(ability => {
         const skillContainer = document.createElement('div');
         skillContainer.classList.add("skill_row")
