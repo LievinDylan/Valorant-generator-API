@@ -17,6 +17,7 @@ const weaponManager= {
         try {
             const weaponsData = await response.json();
             const weapons = weaponsData.data;
+            this.weaponsIdArray = [];
             weapons.forEach(weapon => {
                 if (weapon.displayName !== "Classic" && weapon.displayName !== "Mêlée") {
                 const weaponId = weapon.uuid
@@ -56,7 +57,7 @@ const weaponManager= {
             this.sidearmWeaponArray = [];
             this.sniperWeaponArray = [];
             this.smgWeaponArray = [];
-            this.mediumWeaponArray= [];
+
             // Push des armes dans les tableaux adéquate
             weapons.forEach(weapon => {
                 const typeOfWeapon = weapon.category
@@ -98,6 +99,7 @@ const weaponManager= {
             const randomHeavyNumber = Math.floor(Math.random() * this.heavyWeaponArray.length)
             const randomHeavyWeapon = this.heavyWeaponArray[randomHeavyNumber];
             const heavyWeapon = document.createElement('p');
+            heavyWeapon.classList.add('animate-text-easy');
             heavyWeapon.textContent = randomHeavyWeapon.displayName;
             weaponContainer.appendChild(heavyWeapon);
             //Riffle
@@ -105,31 +107,39 @@ const weaponManager= {
             const randomRiffleWeapon = this.riffleWeaponArray[randomRiffleNumber];
             const riffleWeapon = document.createElement('p');
             riffleWeapon.textContent = randomRiffleWeapon.displayName;
+            riffleWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(riffleWeapon);
             //Shotgun
             const randomShotgunNumber = Math.floor(Math.random() * this.shotgunWeaponArray.length)
             const randomShotgunWeapon = this.shotgunWeaponArray[randomShotgunNumber];
             const shotgunWeapon = document.createElement('p');
             shotgunWeapon.textContent = randomShotgunWeapon.displayName;
+            shotgunWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(shotgunWeapon);
             //Sidearm
             const randomSidearmNumber = Math.floor(Math.random()* this.sidearmWeaponArray.length)
             const randomSidearmWeapon = this.sidearmWeaponArray[randomSidearmNumber];
             const sidearmWeapon = document.createElement('p');
             sidearmWeapon.textContent = randomSidearmWeapon.displayName;
+            sidearmWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(sidearmWeapon);
             //Sniper
             const randomSniperNumber = Math.floor(Math.random() * this.sniperWeaponArray.length)
             const randomSniperWeapon = this.sniperWeaponArray[randomSniperNumber];
             const sniperWeapon = document.createElement('p');
             sniperWeapon.textContent = randomSniperWeapon.displayName;
+            sniperWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(sniperWeapon);
             //SMG
             const randomSMGNumber = Math.floor(Math.random() * this.smgWeaponArray.length)
             const randomSMGWeapon = this.smgWeaponArray[randomSMGNumber];
             const smgWeapon = document.createElement('p');
             smgWeapon.textContent = randomSMGWeapon.displayName;
+            smgWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(smgWeapon);     
+
+            //Lancement de l'animation
+            animationManager.animateTextWeaponEasy();
         } catch (error) {
             console.error(error);
             
@@ -175,7 +185,6 @@ const weaponManager= {
             const weaponThreeFetch = await this.fetchOneWeapon(randomWeaponThree);
             const weaponThree = weaponThreeFetch.data
             this.mediumWeaponArray.push(weaponThree);
-    
         } catch (error) {
             console.error(error)
         }
@@ -190,21 +199,16 @@ const weaponManager= {
         const weaponContainer = document.querySelector('#weapon_container_medium');
         weaponContainer.textContent = "";
 
-        // Display 1re arme
-        const weaponElementOne = document.createElement('p');
-        weaponElementOne.textContent = this.mediumWeaponArray[0].displayName;
-        weaponContainer.appendChild(weaponElementOne);
+        this.mediumWeaponArray.forEach(weapon => {
+            const weaponElement = document.createElement('p');
+            weaponElement.textContent = weapon.displayName;
+            weaponElement.classList.add('animate-text-medium');
+            weaponContainer.appendChild(weaponElement);
+        });
 
-        // Display 2re arme
-        const weaponElementTwo = document.createElement('p');
-        weaponElementTwo.textContent = this.mediumWeaponArray[1].displayName;
-        weaponContainer.appendChild(weaponElementTwo);
-
-        // Display 3e arme
-        const weaponElementThree = document.createElement('p');
-        weaponElementThree.textContent = this.mediumWeaponArray[2].displayName;
-        weaponContainer.appendChild(weaponElementThree)
-    },
+        // Lancement de l'animation
+        animationManager.animateTextWeaponMedium();
+        },
 
     fetchRandomWeaponHard: async function() {
         // Methode pou récuperer les armes
@@ -229,6 +233,9 @@ const weaponManager= {
         weaponContainer.textContent = "";
         const weaponElement = document.createElement('p');
         weaponElement.textContent = weapon.displayName;
+        weaponElement.classList.add('animate-text-hard');
         weaponContainer.appendChild(weaponElement)
+        // Lancement de l'animation
+        animationManager.animateTextWeaponHard();
     }
 }

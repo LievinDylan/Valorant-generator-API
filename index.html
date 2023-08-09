@@ -20,22 +20,35 @@
         <div id="btn_container">
             <button id="agent_generator_btn">GO</button>
         </div>
+        <div id="loading_animation" class="loading-animation">
+            <div class="spinner"></div>
+        </div>          
         <div id="agent_container" class="hidden">
             <div class="left_side">
                 <img id="agent_img">
             </div>
             <div class="right_side hidden">
-                <h2 id="agent_name"></h2>
-                <h4 id="agent_role"></h4>
+                <h3>Agent pour cette mission :</h3>
+                <div class="agent_information"></div>
                 <h3>Arsenal disponible :</h3>
                 <div class="btn_mode_container">
                 <button id="easy_mode" class="mode_btn">BIEN ÉQUIPÉ</button>
                 <button id="medium_mode" class="mode_btn">ÉQUIPÉ</button>
-                <button id="hard_mode" class="mode_btn">TRÈS PEU ÉQUIPÉ</button>
+                <button id="hard_mode" class="mode_btn">MAL ÉQUIPÉ</button>
                 </div>
-                <div id="weapon_container_easy" class="hidden"></div>
-                <div id="weapon_container_medium" class="hidden"></div>
-                <div id="weapon_container_hard" class="hidden"></div>
+                <div id="weapon_container_easy" class="weapon_container hidden"></div>
+                <div id="weapon_container_medium" class="weapon_container hidden"></div>
+                <div id="weapon_container_hard" class="weapon_container hidden"></div>
+                <h3>Compétences disponibles :</h3>
+                <div class="btn_mode_container">
+                 <button id="easy_skill" class="mode_btn">PRESQUE TOUTES</button>
+                 <button id="medium_skill" class="mode_btn">LA MOITIÉ</button>   
+                 <button id="hard_skill" class="mode_btn">L'UNIQUE</button>
+                </div>
+                 <div id="skills_container_easy" class="skills_container hidden"></div>
+                 <div id="skills_container_medium" class="skills_container hidden"></div>
+                 <div id="skills_container_hard" class="skills_container hidden"></div>
+                
                 </div>
             </div>
         </div>
@@ -44,9 +57,11 @@
     <script src="./Javascript/app.js"></script>
     <script src="./Javascript/generator.js"></script>
     <script src="./Javascript/weapons.js"></script>
+    <script src="./Javascript/animation.js"></script>
 
 </body>
 <footer class="footer">
     <p>Copyright : Riot Games</p>
+    <p>Réalisation par Lievin Dylan</p>
 </footer>
 </html>
