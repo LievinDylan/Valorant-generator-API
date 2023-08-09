@@ -70,6 +70,10 @@ body {
 
 
 /* Display de l'agent */
+.agent_selection {
+    padding: 0;
+}
+
 #agent_container {
     position: relative;
     display: flex;
@@ -99,6 +103,7 @@ body {
 .btn_mode_container {
     display: flex;
     justify-content: space-around;
+    margin: 1rem 0;
 }
 
 .mode_btn {
