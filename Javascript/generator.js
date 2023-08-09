@@ -44,7 +44,7 @@ const generatorManager = {
                 this.generateSkillHardMode();
     
                 
-            }, 200);
+            }, 500);
         })
     }
     ,

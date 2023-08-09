@@ -51,7 +51,6 @@ const agentManager = {
 
         const agent = await this.fetchRandomAgent();
         this.currentAgent = agent;
-        console.log(this.currentAgent);
         const agentInformationContainer = document.querySelector('.agent_information')
         agentInformationContainer.textContent = "";
 
@@ -70,8 +69,6 @@ const agentManager = {
         const imgElement = document.querySelector('#agent_img')
         imgElement.setAttribute('src', `${agent.fullPortrait}`);
         animationManager.animateText();
-        
-        console.log(this.currentAgent)
     },
     // Méthode de traitement des compétences de l'agent
     displaySkillsEasy: function() {
@@ -148,7 +145,7 @@ const agentManager = {
 
     },
         // Méthode de traitement pour une compétence
-        displaySkillsHard: function() {
+        displaySkillsHard: async function() {
             const agent = this.currentAgent;
             const skillHardContainer = document.querySelector('#skills_container_hard');
             skillHardContainer.textContent = "";

@@ -6,7 +6,6 @@ const app = {
        generatorManager.generateWeaponEasyMode();
        generatorManager.generateWeaponMediumMode();
        generatorManager.generateWeaponHardMode();
-
     }
 }
 
