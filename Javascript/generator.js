@@ -132,7 +132,7 @@ const generatorManager = {
             const skillContainer = document.querySelector('#skills_container_easy')
             setTimeout(() => {
                 skillContainer.classList.remove('hidden');
-            })
+            }, 200)
         })
     },
 
@@ -153,7 +153,7 @@ const generatorManager = {
             const skillContainer = document.querySelector('#skills_container_medium')
             setTimeout(() => {
                 skillContainer.classList.remove('hidden');
-            })
+            }, 200)
         })
     },
 
@@ -174,7 +174,7 @@ const generatorManager = {
             const skillContainer = document.querySelector('#skills_container_hard')
             setTimeout(() => {
                 skillContainer.classList.remove('hidden');
-            })
+            }, 200)
         })
     },
 }
