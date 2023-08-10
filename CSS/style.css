@@ -212,8 +212,7 @@ body {
 
 @media screen and (max-width: 1500px) {
     .main_container {
-        justify-content: center;
-        align-items: center;
+        align-items: ;
     }
 
     .weapon_container {
@@ -242,11 +241,16 @@ body {
         z-index: -1;
     }
 
+
 }
 
 
 
 @media screen and (max-width: 900px) {
+    .main_container {
+        align-items: center;
+    }
+
     .button_language {
         right: 50%;
         transform: translateX(50%);
