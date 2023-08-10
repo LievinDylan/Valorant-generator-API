@@ -14,12 +14,13 @@ const agentManager = {
 
         // Selection des différentes options pour les cachés lors du changement de langues
         containerToHide = document.querySelectorAll('.items_contrainer');
-        btnToUnselect = document.querySelectorAll('.selected');
+        btnToUnselect = document.querySelectorAll('button');
 
         frenchBtn.addEventListener("click", () => {
             containerToHide.forEach(container => {
                 container.classList.add('hidden');
             });
+            console.log(btnToUnselect)
             btnToUnselect.forEach(btn => {
                 btn.classList.remove('selected')
             });
@@ -111,7 +112,6 @@ const agentManager = {
             try {
                 const agentsData = await response.json();
                 const agents = agentsData.data;
-                console.log(agentsData.data);
                 agents.forEach(agent => {
                     const agentId = agent.uuid
                     this.agentsIdArray.push(agentId)
@@ -193,7 +193,6 @@ const agentManager = {
     // Méthode de traitement des compétences de l'agent
     displaySkillsEasy: function () {
         const agent = this.currentAgent;
-        console.log(this.currentAgent)
         const skillEasyContainer = document.querySelector('#skills_container_easy');
         skillEasyContainer.textContent = "";
         const abilitiesArray = [];
