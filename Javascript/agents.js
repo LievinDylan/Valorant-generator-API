@@ -1,13 +1,13 @@
 
 const agentManager = {
-    agentsIdArray : [],
+    agentsIdArray: [],
     currentAgent: "",
     french: true,
     english: false,
-    agentData: {}, 
+    agentData: {},
     skillsData: {},
 
-    languageSelection: async function() {
+    languageSelection: async function () {
         //Selection des différents éléments
         const frenchBtn = document.querySelector('.french_button');
         const englishBtn = document.querySelector('.english_button');
@@ -31,7 +31,7 @@ const agentManager = {
                 this.french = true;
                 this.english = false;
             }, 200)
-  
+
         })
 
         englishBtn.addEventListener("click", () => {
@@ -54,7 +54,7 @@ const agentManager = {
         this.languageDisplay()
     },
 
-    languageDisplay: function() {
+    languageDisplay: function () {
         const arsenalTitle = document.querySelector('#arsenal_title');
         const skillTitle = document.querySelector('#skill_title');
         const easyWeaponBtn = document.querySelector('#easy_mode');
@@ -89,7 +89,7 @@ const agentManager = {
     },
 
     // Methode de récupération de tout les agents
-    fetchAgents: async function() {
+    fetchAgents: async function () {
         this.languageSelection();
         if (this.french === true) {
             const url = 'https://valorant-api.com/v1/agents?language=fr-FR&isPlayableCharacter=true';
@@ -123,12 +123,12 @@ const agentManager = {
         }
     },
     // Methode pour récupération d'un seul agent suivant l'id (uuid)
-    fetchOneAgent: async function(id) {
+    fetchOneAgent: async function (id) {
         this.languageSelection();
         if (this.french === true) {
             const url = `https://valorant-api.com/v1/agents/${id}?language=fr-FR&isPlayableCharacter=true`;
             const response = await fetch(url);
-    
+
             try {
                 const agentData = await response.json();
                 return agentData;
@@ -138,7 +138,7 @@ const agentManager = {
         } else if (this.english === true) {
             const url = `https://valorant-api.com/v1/agents/${id}?isPlayableCharacter=true`;
             const response = await fetch(url);
-    
+
             try {
                 const agentData = await response.json();
                 return agentData;
@@ -149,7 +149,7 @@ const agentManager = {
 
     },
     // Methode pour générer un nombre aléatoire afin de récuperer un id (aléatoire) dans le tableau des uuid puis générer l'agent aléatoire
-    fetchRandomAgent: async function() {
+    fetchRandomAgent: async function () {
         const agents = await this.fetchAgents();
         // Nombre total des agents
         const nbOfAgents = agents.length;
@@ -164,7 +164,7 @@ const agentManager = {
         return agent;
     },
     // Méthode de traitement des données de l'agent
-    displayAgent: async function() {
+    displayAgent: async function () {
 
         const agent = await this.fetchRandomAgent();
         const agentInformationContainer = document.querySelector('.agent_information')
@@ -191,20 +191,20 @@ const agentManager = {
         animationManager.animateText();
     },
     // Méthode de traitement des compétences de l'agent
-    displaySkillsEasy: function() {
+    displaySkillsEasy: function () {
         const agent = this.currentAgent;
         console.log(this.currentAgent)
         const skillEasyContainer = document.querySelector('#skills_container_easy');
         skillEasyContainer.textContent = "";
         const abilitiesArray = [];
         agent.abilities.forEach(ability => {
-            if(ability.slot !== "Passive"){
+            if (ability.slot !== "Passive") {
                 abilitiesArray.push(ability);
             }
         });
         const randomNumber = Math.floor(Math.random() * abilitiesArray.length);
         // Retire l'élément du tableau
-        abilitiesArray.splice(randomNumber, 1); 
+        abilitiesArray.splice(randomNumber, 1);
 
         abilitiesArray.forEach(ability => {
             const skillContainer = document.createElement('div');
@@ -224,19 +224,19 @@ const agentManager = {
 
     },
     // Méthode de traitement des compétences de l'agent (medium)
-    displaySkillsMedium: function() {
+    displaySkillsMedium: function () {
         const agent = this.currentAgent;
         const skillMediumContainer = document.querySelector('#skills_container_medium');
         skillMediumContainer.textContent = "";
         const abilitiesArray = [];
         agent.abilities.forEach(ability => {
-            if(ability.slot !== "Passive"){
+            if (ability.slot !== "Passive") {
                 abilitiesArray.push(ability);
             }
         });
         const randomNumberOne = Math.floor(Math.random() * abilitiesArray.length);
         let randomNumberTwo = Math.floor(Math.random() * abilitiesArray.length);
-        while (randomNumberTwo === randomNumberOne){
+        while (randomNumberTwo === randomNumberOne) {
             randomNumberTwo = Math.floor(Math.random() * abilitiesArray.length)
         }
 
@@ -247,48 +247,48 @@ const agentManager = {
         newArraySkills.push(avaibleSkillTwo);
 
         newArraySkills.forEach(ability => {
+            const skillContainer = document.createElement('div');
+            skillContainer.classList.add("skill_row")
+            const skillImg = document.createElement('img');
+            skillImg.setAttribute('src', `${ability.displayIcon}`)
+            const skillElement = document.createElement('p');
+            skillElement.textContent = ability.displayName
+            skillElement.classList.add('animate-text-skill-medium')
+
+            skillContainer.appendChild(skillImg);
+            skillContainer.appendChild(skillElement);
+            skillMediumContainer.appendChild(skillContainer);
+            animationManager.animateTextSkillMedium();
+        });
+
+    },
+    // Méthode de traitement pour une compétence
+    displaySkillsHard: async function () {
+        const agent = this.currentAgent;
+        const skillHardContainer = document.querySelector('#skills_container_hard');
+        skillHardContainer.textContent = "";
+        const abilitiesArray = [];
+        agent.abilities.forEach(ability => {
+            if (ability.slot !== "Passive") {
+                abilitiesArray.push(ability);
+            }
+        });
+        const randomNumber = Math.floor(Math.random() * abilitiesArray.length);
+        const ability = abilitiesArray[randomNumber];
         const skillContainer = document.createElement('div');
         skillContainer.classList.add("skill_row")
         const skillImg = document.createElement('img');
         skillImg.setAttribute('src', `${ability.displayIcon}`)
         const skillElement = document.createElement('p');
         skillElement.textContent = ability.displayName
-        skillElement.classList.add('animate-text-skill-medium')
+        skillElement.classList.add('animate-text-skill-hard')
 
         skillContainer.appendChild(skillImg);
         skillContainer.appendChild(skillElement);
-        skillMediumContainer.appendChild(skillContainer);
-        animationManager.animateTextSkillMedium();   
-        });
-
+        skillHardContainer.appendChild(skillContainer);
+        animationManager.animateTextSkillHard();
     },
-        // Méthode de traitement pour une compétence
-        displaySkillsHard: async function() {
-            const agent = this.currentAgent;
-            const skillHardContainer = document.querySelector('#skills_container_hard');
-            skillHardContainer.textContent = "";
-            const abilitiesArray = [];
-            agent.abilities.forEach(ability => {
-                if(ability.slot !== "Passive"){
-                    abilitiesArray.push(ability);
-                }
-            });
-            const randomNumber = Math.floor(Math.random() * abilitiesArray.length);
-            const ability = abilitiesArray[randomNumber];
-                const skillContainer = document.createElement('div');
-                skillContainer.classList.add("skill_row")
-                const skillImg = document.createElement('img');
-                skillImg.setAttribute('src', `${ability.displayIcon}`)
-                const skillElement = document.createElement('p');
-                skillElement.textContent = ability.displayName
-                skillElement.classList.add('animate-text-skill-hard')
-    
-                skillContainer.appendChild(skillImg);
-                skillContainer.appendChild(skillElement);
-                skillHardContainer.appendChild(skillContainer);
-                animationManager.animateTextSkillHard();
-            },
-    
+
 
 };
 

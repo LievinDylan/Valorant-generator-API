@@ -1,16 +1,16 @@
 
-const weaponManager= {
-    weaponsIdArray : [],
-    heavyWeaponArray : [],
-    riffleWeaponArray : [],
-    shotgunWeaponArray : [],
-    sidearmWeaponArray : [],
-    sniperWeaponArray : [],
-    smgWeaponArray : [],
+const weaponManager = {
+    weaponsIdArray: [],
+    heavyWeaponArray: [],
+    riffleWeaponArray: [],
+    shotgunWeaponArray: [],
+    sidearmWeaponArray: [],
+    sniperWeaponArray: [],
+    smgWeaponArray: [],
     mediumWeaponArray: [],
 
     // Methode de récupération de toutes les armes
-    fetchWeapons: async function() {
+    fetchWeapons: async function () {
         const url = 'https://valorant-api.com/v1/weapons?language=fr-FR';
         const response = await fetch(url);
 
@@ -20,8 +20,8 @@ const weaponManager= {
             this.weaponsIdArray = [];
             weapons.forEach(weapon => {
                 if (weapon.displayName !== "Classic" && weapon.displayName !== "Mêlée") {
-                const weaponId = weapon.uuid
-                this.weaponsIdArray.push(weaponId)   
+                    const weaponId = weapon.uuid
+                    this.weaponsIdArray.push(weaponId)
                 }
             });
             return weapons;
@@ -30,8 +30,8 @@ const weaponManager= {
         }
     },
     //Methode pour récupération d'une arme suivant l'id (uuid)
-    fetchOneWeapon: async function(id) {
-        const url =`https://valorant-api.com/v1/weapons/${id}?language=fr-FR`;
+    fetchOneWeapon: async function (id) {
+        const url = `https://valorant-api.com/v1/weapons/${id}?language=fr-FR`;
         const response = await fetch(url);
 
         try {
@@ -43,7 +43,7 @@ const weaponManager= {
 
     },
     // Methode pour générer un nombre aléatoire et récupérer un id (aléatoire)
-    fetchRandomWeaponEasy: async function() {
+    fetchRandomWeaponEasy: async function () {
         try {
             const weapons = await this.fetchWeapons();
 
@@ -80,15 +80,15 @@ const weaponManager= {
                     case 'EEquippableCategory::SMG':
                         this.smgWeaponArray.push(weapon)
                         break;
-            }
-        });
+                }
+            });
         } catch (error) {
             console.error(error)
         }
-    
+
     },
 
-    displayRandomWeaponEasy: async function() {
+    displayRandomWeaponEasy: async function () {
         try {
             //Appel de la méthode générant les tableaux
             await this.fetchRandomWeaponEasy();
@@ -117,7 +117,7 @@ const weaponManager= {
             shotgunWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(shotgunWeapon);
             //Sidearm
-            const randomSidearmNumber = Math.floor(Math.random()* this.sidearmWeaponArray.length)
+            const randomSidearmNumber = Math.floor(Math.random() * this.sidearmWeaponArray.length)
             const randomSidearmWeapon = this.sidearmWeaponArray[randomSidearmNumber];
             const sidearmWeapon = document.createElement('p');
             sidearmWeapon.textContent = randomSidearmWeapon.displayName;
@@ -136,22 +136,22 @@ const weaponManager= {
             const smgWeapon = document.createElement('p');
             smgWeapon.textContent = randomSMGWeapon.displayName;
             smgWeapon.classList.add('animate-text-easy');
-            weaponContainer.appendChild(smgWeapon);     
+            weaponContainer.appendChild(smgWeapon);
 
             //Lancement de l'animation
             animationManager.animateTextWeaponEasy();
         } catch (error) {
             console.error(error);
-            
+
         }
 
     },
 
-    fetchRandomWeaponMedium: async function() {
+    fetchRandomWeaponMedium: async function () {
         try {
             const weapons = await this.fetchWeapons();
             // Nombre total d'armes 
-            const nbOfWeapons= weapons.length - 2;
+            const nbOfWeapons = weapons.length - 2;
             console.log(this.weaponsIdArray)
             console.log(nbOfWeapons)
             // Tableau qui regroupera les 3 armes générés aléatoirement (reset)
@@ -163,8 +163,8 @@ const weaponManager= {
             const weaponOneFetch = await this.fetchOneWeapon(randomWeaponOne);
             const weaponOne = weaponOneFetch.data;
             this.mediumWeaponArray.push(weaponOne);
-    
-            
+
+
             // Génération de la seconde arme
             let randomNumberTwo = Math.floor(Math.random() * nbOfWeapons);
             while (randomNumberTwo === randomNumberOne) {
@@ -174,8 +174,8 @@ const weaponManager= {
             const weaponTwoFetch = await this.fetchOneWeapon(randomWeaponTwo);
             const weaponTwo = weaponTwoFetch.data
             this.mediumWeaponArray.push(weaponTwo);
-    
-            
+
+
             // Génération de la troisième arme
             let randomNumberThree = Math.floor(Math.random() * nbOfWeapons);
             while (randomNumberThree === randomNumberOne || randomNumberThree === randomNumberTwo) {
@@ -190,11 +190,11 @@ const weaponManager= {
         }
 
     },
-    
-    displayRandomWeaponMedium: async function() {
+
+    displayRandomWeaponMedium: async function () {
         // Methode qui génére les 3 armes et push ces dernières dans le tableau correspondant
         await this.fetchRandomWeaponMedium();
-        
+
         //Selection du container des armes
         const weaponContainer = document.querySelector('#weapon_container_medium');
         weaponContainer.textContent = "";
@@ -208,9 +208,9 @@ const weaponManager= {
 
         // Lancement de l'animation
         animationManager.animateTextWeaponMedium();
-        },
+    },
 
-    fetchRandomWeaponHard: async function() {
+    fetchRandomWeaponHard: async function () {
         // Methode pou récuperer les armes
         const weapons = await this.fetchWeapons();
         // Nombre total des armes
@@ -225,7 +225,7 @@ const weaponManager= {
         return weapon;
     },
 
-    displayRandomWeaponHard: async function() {
+    displayRandomWeaponHard: async function () {
         const weapon = await this.fetchRandomWeaponHard();
 
         // Ajout de l'arme
