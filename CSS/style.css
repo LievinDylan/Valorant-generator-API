@@ -213,9 +213,6 @@ body {
 /* Responsiv */
 
 @media screen and (max-width: 1500px) {
-    .main_container {
-        align-items: ;
-    }
 
     .weapon_container {
         flex-direction: row;
