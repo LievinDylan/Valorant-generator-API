@@ -1,11 +1,11 @@
 const generatorManager = {
     // Génération d'un agent au clic du bouton
     generateAgent: function() {
+        agentManager.languageSelection();
         const generateBtn = document.querySelector('#agent_generator_btn');
         generateBtn.addEventListener("click",(event) => {
             // Préviens l'event par défaut
             event.preventDefault();
-
             document.querySelector('.agent_information').textContent = "";
                 //Rappel de la génération d'arme/skills en cas de click sur "Encore"
                document.querySelector('#weapon_container_easy').classList.add('hidden');
@@ -28,6 +28,7 @@ const generatorManager = {
             
 
             agentManager.displayAgent();
+            
             setTimeout(() => {
                 // Masquer l'animation de chargement
                 agentLoadingAnimation.style.display = 'none';
@@ -36,9 +37,9 @@ const generatorManager = {
                 const agentContainerElement = document.querySelector('#agent_container');
                 const agentContainerRightSide = document.querySelector('.right_side');
                 // Apparition des informations de l'agent
+                document.querySelector('.left_side').classList.remove('hidden');
                 agentContainerRightSide.classList.remove('hidden');
                 agentContainerElement.classList.remove('hidden');
-                generateBtn.textContent = "ENCORE !";
                 this.generateSkillEasyMode();
                 this.generateSkillMediumMode();
                 this.generateSkillHardMode();

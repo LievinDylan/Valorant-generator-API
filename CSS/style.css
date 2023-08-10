@@ -171,7 +171,38 @@ body {
   visibility:hidden; 
 }
 
+/* Langues */
+.button_language {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    gap: 1rem;
+    right: 5%;
+}
 
+.french_button {
+    height: 30px;
+    padding: 0;
+    background-color: #0f1923;
+    border: 0px;
+    cursor: pointer;
+}
+
+.french_flag {
+    height: 30px;
+}
+
+.english_button {
+    height: 30px;
+    padding: 0;
+    background-color: #0f1923;
+    border: 0px;
+    cursor: pointer;
+}
+
+.english_flag {
+    height: 30px;
+}
 
 .hidden {
     display: none;
