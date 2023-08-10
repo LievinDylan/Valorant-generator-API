@@ -109,6 +109,8 @@ body {
     width: 200px;
     font-family: 'Orbitron', sans-serif;
     font-weight: bold;
+    border-radius: 10px;
+    color: #0f1923;
     cursor: pointer;
 }
 
