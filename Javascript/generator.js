@@ -69,7 +69,6 @@ const generatorManager = {
             setTimeout(() => {
                 weaponContainer.classList.remove('hidden');
             }, 200);
-
         })
     },
     // Génération des armes aléatoire (3 armes / mode médium)
