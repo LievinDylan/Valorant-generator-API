@@ -213,9 +213,6 @@ body {
 /* Responsiv */
 
 @media screen and (max-width: 1500px) {
-    body {
-        width: 100vw;
-    }
     .weapon_container {
         flex-direction: row;
         flex-wrap: wrap;
@@ -227,6 +224,7 @@ body {
         flex-direction: column-reverse;
         justify-content: center;
         align-items: center;
+        position: relative;
         width: 80%;
     }
 
@@ -237,11 +235,10 @@ body {
     }
 
     .left_side {
-        position: absolute;
-        left: 60%;
+        position: fixed;
+        left: 50%;
         z-index: -1;
     }
-
 
 }
 
