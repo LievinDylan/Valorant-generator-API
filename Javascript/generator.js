@@ -26,25 +26,20 @@ const generatorManager = {
             const agentLoadingAnimation = document.querySelector('#loading_animation');
             agentLoadingAnimation.style.display = 'block';
 
-
             agentManager.displayAgent();
-
             setTimeout(() => {
                 // Masquer l'animation de chargement
                 agentLoadingAnimation.style.display = 'none';
-
-
                 const agentContainerElement = document.querySelector('#agent_container');
                 const agentContainerRightSide = document.querySelector('.right_side');
                 // Apparition des informations de l'agent
                 document.querySelector('.left_side').classList.remove('hidden');
                 agentContainerRightSide.classList.remove('hidden');
                 agentContainerElement.classList.remove('hidden');
+    
                 this.generateSkillEasyMode();
                 this.generateSkillMediumMode();
                 this.generateSkillHardMode();
-
-
             }, 500);
         })
     }

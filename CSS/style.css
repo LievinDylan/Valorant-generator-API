@@ -213,7 +213,9 @@ body {
 /* Responsiv */
 
 @media screen and (max-width: 1500px) {
-
+    body {
+        width: 100vw;
+    }
     .weapon_container {
         flex-direction: row;
         flex-wrap: wrap;
@@ -249,6 +251,12 @@ body {
     .main_container {
         align-items: center;
     }
+
+    #agent_icon {
+        display: block;
+        margin: 0 auto;
+        height: 150px;
+    } 
 
     .button_language {
         right: 50%;

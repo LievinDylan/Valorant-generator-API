@@ -4,10 +4,9 @@ const agentManager = {
     currentAgent: "",
     french: true,
     english: false,
-    agentData: {},
-    skillsData: {},
+    generateBtnClicked : false,
 
-    languageSelection: async function () {
+    languageSelection: function () {
         //Selection des différents éléments
         const frenchBtn = document.querySelector('.french_button');
         const englishBtn = document.querySelector('.english_button');
@@ -24,13 +23,12 @@ const agentManager = {
             btnToUnselect.forEach(btn => {
                 btn.classList.remove('selected')
             });
-            const agentLoadingAnimation = document.querySelector('#loading_animation');
-            agentLoadingAnimation.style.display = 'block';
-            setTimeout(() => {
-                agentLoadingAnimation.style.display = 'none';
-                this.displayAgent();
+            setTimeout(() => {           
                 this.french = true;
                 this.english = false;
+                document.querySelector('.right_side').classList.add('hidden');
+                document.querySelector('.left_side').classList.add('hidden');
+                document.querySelector('#agent_generator_btn').textContent = "PARTIE TROUVÉE";
             }, 200)
 
         })
@@ -42,20 +40,20 @@ const agentManager = {
             btnToUnselect.forEach(btn => {
                 btn.classList.remove('selected')
             });
-            const agentLoadingAnimation = document.querySelector('#loading_animation');
-            agentLoadingAnimation.style.display = 'block';
             setTimeout(() => {
-                agentLoadingAnimation.style.display = 'none';
-                this.displayAgent();
                 this.french = false;
                 this.english = true;
+                document.querySelector('.right_side').classList.add('hidden');
+                document.querySelector('.left_side').classList.add('hidden');
+                document.querySelector('#agent_generator_btn').textContent = "MATCH FOUND";
             }, 200)
-
         })
+
         this.languageDisplay()
     },
 
     languageDisplay: function () {
+        this.generatorClickedBtn();       
         const arsenalTitle = document.querySelector('#arsenal_title');
         const skillTitle = document.querySelector('#skill_title');
         const easyWeaponBtn = document.querySelector('#easy_mode');
@@ -65,7 +63,6 @@ const agentManager = {
         const mediumSkillBtn = document.querySelector('#medium_skill');
         const hardSkillBtn = document.querySelector('#hard_skill');
         const generateBtn = document.querySelector('#agent_generator_btn');
-
         if (this.french) {
             arsenalTitle.textContent = "Arsenal disponible :"
             skillTitle.textContent = "Compétences disponibles :"
@@ -74,8 +71,14 @@ const agentManager = {
             hardWeaponBtn.textContent = "MAL ÉQUIPÉ"
             easySkillBtn.textContent = "PRESQUE TOUTES"
             mediumSkillBtn.textContent = "LA MOITIÉ"
-            hardSkillBtn.textContent = "L'UNIQUE"
-            generateBtn.textContent = "PARTIE TROUVÉE"
+            hardSkillBtn.textContent = "L'UNIQUE"            
+            if (this.generateBtnClicked) {
+                setTimeout(() => {
+                  generateBtn.textContent = "ENCORE"  
+                },500)
+            } else {
+                generateBtn.textContent = "PARTIE TROUVÉE"
+            }
         } else if (this.english) {
             arsenalTitle.textContent = "Weapons available :"
             skillTitle.textContent = "Skills available :"
@@ -85,7 +88,13 @@ const agentManager = {
             easySkillBtn.textContent = "ALMOST ALL"
             mediumSkillBtn.textContent = "HALF"
             hardSkillBtn.textContent = "UNIQUE"
-            generateBtn.textContent = "MATCH FOUND"
+            if (this.generateBtnClicked) {
+                setTimeout(() => {
+                    generateBtn.textContent = "AGAIN"  
+                  },500)
+            } else {
+                generateBtn.textContent = "MATCH FOUND"
+            }
         }
     },
 
@@ -96,6 +105,7 @@ const agentManager = {
             const url = 'https://valorant-api.com/v1/agents?language=fr-FR&isPlayableCharacter=true';
             const response = await fetch(url);
             try {
+                this.agentsIdArray = [];
                 const agentsData = await response.json();
                 const agents = agentsData.data;
                 agents.forEach(agent => {
@@ -110,6 +120,7 @@ const agentManager = {
             const url = 'https://valorant-api.com/v1/agents?isPlayableCharacter=true';
             const response = await fetch(url);
             try {
+                this.agentsIdArray = [];
                 const agentsData = await response.json();
                 const agents = agentsData.data;
                 agents.forEach(agent => {
@@ -165,7 +176,6 @@ const agentManager = {
     },
     // Méthode de traitement des données de l'agent
     displayAgent: async function () {
-
         const agent = await this.fetchRandomAgent();
         const agentInformationContainer = document.querySelector('.agent_information')
         agentInformationContainer.textContent = "";
@@ -178,6 +188,12 @@ const agentManager = {
         nameElement.classList.add('agent_name');
         nameElement.textContent = agent.displayName;
         agentInformationContainer.appendChild(nameElement)
+        // Ajout de la miniature pour le format mobile
+        const iconElement = document.createElement('img');
+        iconElement.setAttribute('src',`${agent.displayIcon}`);
+        iconElement.setAttribute('id', 'agent_icon');
+        iconElement.classList.add('hidden');
+        agentInformationContainer.appendChild(iconElement);
         // Ajout du rôle de l'agent
         const roleElement = document.createElement('p');
         roleElement.classList.add('animate-text')
@@ -287,7 +303,11 @@ const agentManager = {
         skillHardContainer.appendChild(skillContainer);
         animationManager.animateTextSkillHard();
     },
-
+    generatorClickedBtn: function () {
+        document.querySelector('#agent_generator_btn').addEventListener("click",() => {
+            this.generateBtnClicked = true;
+        })
+    }
 
 };
 

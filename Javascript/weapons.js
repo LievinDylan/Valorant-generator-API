@@ -95,27 +95,6 @@ const weaponManager = {
             //Selection du container des armes
             const weaponContainer = document.querySelector('#weapon_container_easy');
             weaponContainer.textContent = "";
-            //Heavy
-            const randomHeavyNumber = Math.floor(Math.random() * this.heavyWeaponArray.length)
-            const randomHeavyWeapon = this.heavyWeaponArray[randomHeavyNumber];
-            const heavyWeapon = document.createElement('p');
-            heavyWeapon.classList.add('animate-text-easy');
-            heavyWeapon.textContent = randomHeavyWeapon.displayName;
-            weaponContainer.appendChild(heavyWeapon);
-            //Riffle
-            const randomRiffleNumber = Math.floor(Math.random() * this.riffleWeaponArray.length)
-            const randomRiffleWeapon = this.riffleWeaponArray[randomRiffleNumber];
-            const riffleWeapon = document.createElement('p');
-            riffleWeapon.textContent = randomRiffleWeapon.displayName;
-            riffleWeapon.classList.add('animate-text-easy');
-            weaponContainer.appendChild(riffleWeapon);
-            //Shotgun
-            const randomShotgunNumber = Math.floor(Math.random() * this.shotgunWeaponArray.length)
-            const randomShotgunWeapon = this.shotgunWeaponArray[randomShotgunNumber];
-            const shotgunWeapon = document.createElement('p');
-            shotgunWeapon.textContent = randomShotgunWeapon.displayName;
-            shotgunWeapon.classList.add('animate-text-easy');
-            weaponContainer.appendChild(shotgunWeapon);
             //Sidearm
             const randomSidearmNumber = Math.floor(Math.random() * this.sidearmWeaponArray.length)
             const randomSidearmWeapon = this.sidearmWeaponArray[randomSidearmNumber];
@@ -123,13 +102,13 @@ const weaponManager = {
             sidearmWeapon.textContent = randomSidearmWeapon.displayName;
             sidearmWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(sidearmWeapon);
-            //Sniper
-            const randomSniperNumber = Math.floor(Math.random() * this.sniperWeaponArray.length)
-            const randomSniperWeapon = this.sniperWeaponArray[randomSniperNumber];
-            const sniperWeapon = document.createElement('p');
-            sniperWeapon.textContent = randomSniperWeapon.displayName;
-            sniperWeapon.classList.add('animate-text-easy');
-            weaponContainer.appendChild(sniperWeapon);
+            //Heavy
+            const randomHeavyNumber = Math.floor(Math.random() * this.heavyWeaponArray.length)
+            const randomHeavyWeapon = this.heavyWeaponArray[randomHeavyNumber];
+            const heavyWeapon = document.createElement('p');
+            heavyWeapon.classList.add('animate-text-easy');
+            heavyWeapon.textContent = randomHeavyWeapon.displayName;
+            weaponContainer.appendChild(heavyWeapon);
             //SMG
             const randomSMGNumber = Math.floor(Math.random() * this.smgWeaponArray.length)
             const randomSMGWeapon = this.smgWeaponArray[randomSMGNumber];
@@ -137,6 +116,28 @@ const weaponManager = {
             smgWeapon.textContent = randomSMGWeapon.displayName;
             smgWeapon.classList.add('animate-text-easy');
             weaponContainer.appendChild(smgWeapon);
+            //Shotgun
+            const randomShotgunNumber = Math.floor(Math.random() * this.shotgunWeaponArray.length)
+            const randomShotgunWeapon = this.shotgunWeaponArray[randomShotgunNumber];
+            const shotgunWeapon = document.createElement('p');
+            shotgunWeapon.textContent = randomShotgunWeapon.displayName;
+            shotgunWeapon.classList.add('animate-text-easy');
+            weaponContainer.appendChild(shotgunWeapon);
+            //Sniper
+            const randomSniperNumber = Math.floor(Math.random() * this.sniperWeaponArray.length)
+            const randomSniperWeapon = this.sniperWeaponArray[randomSniperNumber];
+            const sniperWeapon = document.createElement('p');
+            sniperWeapon.textContent = randomSniperWeapon.displayName;
+            sniperWeapon.classList.add('animate-text-easy');
+            weaponContainer.appendChild(sniperWeapon);
+            //Riffle
+            const randomRiffleNumber = Math.floor(Math.random() * this.riffleWeaponArray.length)
+            const randomRiffleWeapon = this.riffleWeaponArray[randomRiffleNumber];
+            const riffleWeapon = document.createElement('p');
+            riffleWeapon.textContent = randomRiffleWeapon.displayName;
+            riffleWeapon.classList.add('animate-text-easy');
+            weaponContainer.appendChild(riffleWeapon);
+
 
             //Lancement de l'animation
             animationManager.animateTextWeaponEasy();
