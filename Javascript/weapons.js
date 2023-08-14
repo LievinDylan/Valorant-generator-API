@@ -8,7 +8,7 @@ const weaponManager = {
     sidearmWeaponArray: [],
     sniperWeaponArray: [],
     smgWeaponArray: [],
-    mediumWeaponArray: [],
+
 
     // Methode de récupération de toutes les armes
     fetchAllWeapons: async function () {
@@ -104,8 +104,7 @@ const weaponManager = {
            async function generateMediumWeapon(randomNumber) {
                 const randomId = weaponManager.weaponsIdArray[randomNumber]
                 const randomWeapon = await weaponManager.fetchOneWeapon(randomId);
-                const newWeapon = randomWeapon.data;
-                weaponManager.mediumWeaponArray.push(newWeapon);
+                return randomWeapon.data;
             }
 
             // Génération de 3 nombres aléatoire pour aller chercher 3 id différent
@@ -120,9 +119,10 @@ const weaponManager = {
             }
 
             // Mise en place des 3 armes
-            await generateMediumWeapon(randomNumberOne);
-            await generateMediumWeapon(randomNumberTwo);
-            await generateMediumWeapon(randomNumberThree);
+            const firstWeapon = await generateMediumWeapon(randomNumberOne);
+            const secondWeapon = await generateMediumWeapon(randomNumberTwo);
+            const thirdWeapon = await generateMediumWeapon(randomNumberThree);
+            return [firstWeapon, secondWeapon, thirdWeapon];
 
         } catch (error) {
             console.error(error)
@@ -132,13 +132,13 @@ const weaponManager = {
 
     displayRandomWeaponMedium: async function () {
         // Methode qui génére les 3 armes et push ces dernières dans le tableau correspondant
-        await this.fetchRandomWeaponMedium();
+        const weapons = await this.fetchRandomWeaponMedium();
 
         //Selection du container des armes
         const weaponContainer = document.querySelector('#weapon_container_medium');
         weaponContainer.textContent = "";
 
-        this.mediumWeaponArray.forEach(weapon => {
+        weapons.forEach(weapon => {
             const weaponElement = document.createElement('p');
             weaponElement.textContent = weapon.displayName;
             weaponElement.classList.add('animate-text-medium');
