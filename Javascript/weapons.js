@@ -1,3 +1,4 @@
+import { animationManager } from './animation.js'
 
 const weaponManager = {
     weaponsIdArray: [],
@@ -177,3 +178,5 @@ const weaponManager = {
         animationManager.animateTextWeaponHard();
     }
 }
+
+export { weaponManager };

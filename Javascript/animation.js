@@ -42,4 +42,4 @@ const animationManager = {
   },
 };
 
-
+export { animationManager };

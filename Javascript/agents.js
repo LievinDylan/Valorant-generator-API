@@ -1,7 +1,8 @@
+import { animationManager } from './animation.js'
 
 const agentManager = {
     agentsIdArray: [],
-    currentAgent: "",
+    agentAbilities: [],
     french: true,
     english: false,
     generateBtnClicked : false,
@@ -12,8 +13,8 @@ const agentManager = {
         const englishBtn = document.querySelector('.english_button');
 
         // Selection des différentes options pour les cachés lors du changement de langues
-        containerToHide = document.querySelectorAll('.items_contrainer');
-        btnToUnselect = document.querySelectorAll('button');
+        const containerToHide = document.querySelectorAll('.items_container');
+        const btnToUnselect = document.querySelectorAll('button');
 
         frenchBtn.addEventListener("click", () => {
             containerToHide.forEach(container => {
@@ -56,9 +57,9 @@ const agentManager = {
         this.generatorClickedBtn();       
         const arsenalTitle = document.querySelector('#arsenal_title');
         const skillTitle = document.querySelector('#skill_title');
-        const easyWeaponBtn = document.querySelector('#easy_mode');
-        const mediumWeaponBtn = document.querySelector('#medium_mode');
-        const hardWeaponBtn = document.querySelector('#hard_mode');
+        const easyWeaponBtn = document.querySelector('#easy_weapon');
+        const mediumWeaponBtn = document.querySelector('#medium_weapon');
+        const hardWeaponBtn = document.querySelector('#hard_weapon');
         const easySkillBtn = document.querySelector('#easy_skill');
         const mediumSkillBtn = document.querySelector('#medium_skill');
         const hardSkillBtn = document.querySelector('#hard_skill');
@@ -171,7 +172,7 @@ const agentManager = {
         // Récupération de l'agent
         const randomAgentData = await this.fetchOneAgent(randomAgentId);
         const agent = randomAgentData.data;
-        this.currentAgent = agent;
+        this.agentAbilities = agent.abilities.filter(agent => agent.slot !== "Passive");
         return agent;
     },
     // Méthode de traitement des données de l'agent
@@ -208,106 +209,61 @@ const agentManager = {
     },
     // Méthode de traitement des compétences de l'agent
     displaySkillsEasy: function () {
-        const agent = this.currentAgent;
         const skillEasyContainer = document.querySelector('#skills_container_easy');
         skillEasyContainer.textContent = "";
-        const abilitiesArray = [];
-        agent.abilities.forEach(ability => {
-            if (ability.slot !== "Passive") {
-                abilitiesArray.push(ability);
-            }
-        });
-        const randomNumber = Math.floor(Math.random() * abilitiesArray.length);
-        // Retire l'élément du tableau
-        abilitiesArray.splice(randomNumber, 1);
-
+        let abilitiesArray = [];
+        const randomNumber = Math.floor(Math.random() * this.agentAbilities.length);
+        abilitiesArray = this.agentAbilities.filter(agent => agent !== this.agentAbilities[randomNumber]);
         abilitiesArray.forEach(ability => {
-            const skillContainer = document.createElement('div');
-            skillContainer.classList.add("skill_row")
-            const skillImg = document.createElement('img');
-            skillImg.setAttribute('src', `${ability.displayIcon}`)
-            const skillElement = document.createElement('p');
-            skillElement.textContent = ability.displayName
-            skillElement.classList.add('animate-text-skill-easy')
-
-            skillContainer.appendChild(skillImg);
-            skillContainer.appendChild(skillElement);
-            skillEasyContainer.appendChild(skillContainer);
+            this.createSkillElement(ability, 'easy', skillEasyContainer);
             animationManager.animateTextSkillEasy();
         })
-
-
     },
     // Méthode de traitement des compétences de l'agent (medium)
     displaySkillsMedium: function () {
-        const agent = this.currentAgent;
         const skillMediumContainer = document.querySelector('#skills_container_medium');
         skillMediumContainer.textContent = "";
-        const abilitiesArray = [];
-        agent.abilities.forEach(ability => {
-            if (ability.slot !== "Passive") {
-                abilitiesArray.push(ability);
-            }
-        });
-        const randomNumberOne = Math.floor(Math.random() * abilitiesArray.length);
-        let randomNumberTwo = Math.floor(Math.random() * abilitiesArray.length);
+        const randomNumberOne = Math.floor(Math.random() * this.agentAbilities.length);
+        let randomNumberTwo = Math.floor(Math.random() * this.agentAbilities.length);
         while (randomNumberTwo === randomNumberOne) {
-            randomNumberTwo = Math.floor(Math.random() * abilitiesArray.length)
+            randomNumberTwo = Math.floor(Math.random() * this.agentAbilities.length)
         }
-
-        let newArraySkills = [];
-        const avaibleSkillOne = abilitiesArray[randomNumberOne];
-        const avaibleSkillTwo = abilitiesArray[randomNumberTwo];
-        newArraySkills.push(avaibleSkillOne);
-        newArraySkills.push(avaibleSkillTwo);
-
+        const newArraySkills = [
+            this.agentAbilities[randomNumberOne],
+            this.agentAbilities[randomNumberTwo]
+          ];         
         newArraySkills.forEach(ability => {
-            const skillContainer = document.createElement('div');
-            skillContainer.classList.add("skill_row")
-            const skillImg = document.createElement('img');
-            skillImg.setAttribute('src', `${ability.displayIcon}`)
-            const skillElement = document.createElement('p');
-            skillElement.textContent = ability.displayName
-            skillElement.classList.add('animate-text-skill-medium')
-
-            skillContainer.appendChild(skillImg);
-            skillContainer.appendChild(skillElement);
-            skillMediumContainer.appendChild(skillContainer);
+            this.createSkillElement(ability, 'medium', skillMediumContainer);
             animationManager.animateTextSkillMedium();
         });
-
     },
     // Méthode de traitement pour une compétence
     displaySkillsHard: async function () {
-        const agent = this.currentAgent;
         const skillHardContainer = document.querySelector('#skills_container_hard');
         skillHardContainer.textContent = "";
-        const abilitiesArray = [];
-        agent.abilities.forEach(ability => {
-            if (ability.slot !== "Passive") {
-                abilitiesArray.push(ability);
-            }
-        });
-        const randomNumber = Math.floor(Math.random() * abilitiesArray.length);
-        const ability = abilitiesArray[randomNumber];
+        const randomNumber = Math.floor(Math.random() * this.agentAbilities.length);
+        const ability = this.agentAbilities[randomNumber];
+        this.createSkillElement(ability, 'hard', skillHardContainer);
+        animationManager.animateTextSkillHard();
+    },
+    createSkillElement: function(ability, difficulty, container, animation) {
         const skillContainer = document.createElement('div');
-        skillContainer.classList.add("skill_row")
+        skillContainer.classList.add("skill_row");
         const skillImg = document.createElement('img');
-        skillImg.setAttribute('src', `${ability.displayIcon}`)
+        skillImg.setAttribute('src', `${ability.displayIcon}`);
         const skillElement = document.createElement('p');
-        skillElement.textContent = ability.displayName
-        skillElement.classList.add('animate-text-skill-hard')
-
+        skillElement.textContent = ability.displayName;
+        skillElement.classList.add(`animate-text-skill-${difficulty}`);
         skillContainer.appendChild(skillImg);
         skillContainer.appendChild(skillElement);
-        skillHardContainer.appendChild(skillContainer);
-        animationManager.animateTextSkillHard();
+        container.appendChild(skillContainer);
     },
     generatorClickedBtn: function () {
         document.querySelector('#agent_generator_btn').addEventListener("click",() => {
             this.generateBtnClicked = true;
         })
-    }
+    },
 
 };
 
+export { agentManager };

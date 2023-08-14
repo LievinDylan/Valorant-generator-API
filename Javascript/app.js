@@ -1,11 +1,9 @@
+import { generatorManager } from './generator.js'
 
 const app = {
     init: function () {
         // Initialisation de la génération d'agent
         generatorManager.generateAgent();
-        generatorManager.generateWeaponEasyMode();
-        generatorManager.generateWeaponMediumMode();
-        generatorManager.generateWeaponHardMode();
     }
 }
 

@@ -1,3 +1,6 @@
+import {agentManager} from './agents.js'
+import {weaponManager} from './weapons.js'
+
 const generatorManager = {
     // Génération d'un agent au clic du bouton
     generateAgent: function () {
@@ -8,21 +11,16 @@ const generatorManager = {
             event.preventDefault();
             document.querySelector('.agent_information').textContent = "";
             //Rappel de la génération d'arme/skills en cas de click sur "Encore"
-            document.querySelector('#weapon_container_easy').classList.add('hidden');
-            document.querySelector('#weapon_container_medium').classList.add('hidden');
-            document.querySelector('#weapon_container_hard').classList.add('hidden');
-            document.querySelector('#skills_container_easy').classList.add('hidden');
-            document.querySelector('#skills_container_medium').classList.add('hidden');
-            document.querySelector('#skills_container_hard').classList.add('hidden');
-
+            const allGenerateContainer = document.querySelectorAll('.items_container');
+            allGenerateContainer.forEach(container => {
+                container.classList.add('hidden')
+            });
             // Reset des boutons
-            document.querySelector('#easy_mode').classList.remove('selected');
-            document.querySelector('#medium_mode').classList.remove('selected');
-            document.querySelector('#hard_mode').classList.remove('selected');
-            document.querySelector('#easy_skill').classList.remove('selected');
-            document.querySelector('#medium_skill').classList.remove('selected');
-            document.querySelector('#hard_skill').classList.remove('selected');
-            // Avant d'appeler agentManager.displayAgent();
+            const allModeBtn = document.querySelectorAll('.mode_btn');
+            allModeBtn.forEach(btn => {
+                btn.classList.remove('selected');
+            })
+            // Lancement des animations de chargement
             const agentLoadingAnimation = document.querySelector('#loading_animation');
             agentLoadingAnimation.style.display = 'block';
 
@@ -30,13 +28,14 @@ const generatorManager = {
             setTimeout(() => {
                 // Masquer l'animation de chargement
                 agentLoadingAnimation.style.display = 'none';
-                const agentContainerElement = document.querySelector('#agent_container');
-                const agentContainerRightSide = document.querySelector('.right_side');
+    ;
                 // Apparition des informations de l'agent
                 document.querySelector('.left_side').classList.remove('hidden');
-                agentContainerRightSide.classList.remove('hidden');
-                agentContainerElement.classList.remove('hidden');
-    
+                document.querySelector('.right_side').classList.remove('hidden');
+                document.querySelector('#agent_container').classList.remove('hidden');
+                this.generateWeaponEasyMode();
+                this.generateWeaponMediumMode();
+                this.generateWeaponHardMode();
                 this.generateSkillEasyMode();
                 this.generateSkillMediumMode();
                 this.generateSkillHardMode();
@@ -46,15 +45,15 @@ const generatorManager = {
     ,
     // Génération des armes aléatoire (une par type / mode facile)
     generateWeaponEasyMode: function () {
-        const generateEasyBtn = document.querySelector('#easy_mode');
+        const generateEasyBtn = document.querySelector('#easy_weapon');
         generateEasyBtn.addEventListener("click", (event) => {
             // Préviens l'event par défaut
             event.preventDefault();
 
             // Modification du button
             generateEasyBtn.classList.add('selected');
-            document.querySelector('#medium_mode').classList.remove('selected');
-            document.querySelector('#hard_mode').classList.remove('selected');
+            document.querySelector('#medium_weapon').classList.remove('selected');
+            document.querySelector('#hard_weapon').classList.remove('selected');
 
             document.querySelector('#weapon_container_medium').classList.add('hidden');
             document.querySelector('#weapon_container_hard').classList.add('hidden');
@@ -68,15 +67,15 @@ const generatorManager = {
     },
     // Génération des armes aléatoire (3 armes / mode médium)
     generateWeaponMediumMode: function () {
-        const generateMediumBtn = document.querySelector('#medium_mode');
+        const generateMediumBtn = document.querySelector('#medium_weapon');
         generateMediumBtn.addEventListener("click", (event) => {
             // Préviens l'event par défaut
             event.preventDefault();
 
             // Modification du button
             generateMediumBtn.classList.add('selected');
-            document.querySelector('#easy_mode').classList.remove('selected');
-            document.querySelector('#hard_mode').classList.remove('selected');
+            document.querySelector('#easy_weapon').classList.remove('selected');
+            document.querySelector('#hard_weapon').classList.remove('selected');
 
             document.querySelector('#weapon_container_easy').classList.add('hidden');
             document.querySelector('#weapon_container_hard').classList.add('hidden');
@@ -90,14 +89,14 @@ const generatorManager = {
     },
     // Génération d'une arme aléatoire (une seule)
     generateWeaponHardMode: function () {
-        const generateHardBtn = document.querySelector('#hard_mode');
+        const generateHardBtn = document.querySelector('#hard_weapon');
         generateHardBtn.addEventListener("click", (event) => {
             // Préviens l'event par défaut
             event.preventDefault();
             // Modification du button
             generateHardBtn.classList.add('selected');
-            document.querySelector('#easy_mode').classList.remove('selected');
-            document.querySelector('#medium_mode').classList.remove('selected');
+            document.querySelector('#easy_weapon').classList.remove('selected');
+            document.querySelector('#medium_weapon').classList.remove('selected');
 
             document.querySelector('#weapon_container_easy').classList.add('hidden');
             document.querySelector('#weapon_container_medium').classList.add('hidden');
@@ -173,3 +172,5 @@ const generatorManager = {
         })
     },
 }
+
+export { generatorManager };
